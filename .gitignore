@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build outputs
+build/
+dist/
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated model outputs
+outputs/
