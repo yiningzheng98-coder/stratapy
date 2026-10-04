@@ -6,7 +6,7 @@ StrataPy is a Python project for modelling the full life cycle of an asset-backe
 
 The first release will focus on a fixed-rate auto loan ABS with senior, mezzanine, and equity tranches. The project is designed to be transparent, testable, and useful for structured finance analysis, scenario testing, and portfolio demonstrations.
 
-> **Project status:** design and initial build. This README defines the intended scope of the first working release; model code and sample outputs will be added incrementally.
+> **Project status:** early development. Fixed-rate contractual loan amortisation is implemented; credit assumptions, portfolio aggregation, and tranche waterfalls are next.
 
 ## Why StrataPy?
 
@@ -132,7 +132,43 @@ The example transaction will include three transparent scenarios:
 
 Exact assumptions will be documented alongside the synthetic loan pool rather than embedded silently in the model.
 
-## Planned Python Interface
+## Getting Started
+
+StrataPy requires Python 3.11 or later. After cloning the repository, create a virtual environment and install the package with its development tools:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python -m pip install -e ".[dev]"
+.\.venv\Scripts\python -m pytest
+```
+
+Run the first loan-level example:
+
+```powershell
+.\.venv\Scripts\python examples\basic_loan.py
+```
+
+The example creates a five-year fixed-rate auto loan and prints the first twelve months of its contractual amortisation schedule.
+
+## Current Python Interface
+
+Contractual loan cash flows can be generated directly:
+
+```python
+from stratapy import FixedRateLoan
+
+loan = FixedRateLoan(
+    loan_id="AUTO-0001",
+    balance=25_000,
+    annual_rate=0.075,
+    remaining_term_months=60,
+)
+
+schedule = loan.amortisation_schedule()
+print(schedule[0])
+```
+
+## Planned Deal Interface
 
 The public API is expected to follow a simple workflow:
 
@@ -181,7 +217,7 @@ stratapy/
 ## Roadmap
 
 - [x] Define project scope and modelling conventions
-- [ ] Implement fixed-rate loan amortisation
+- [x] Implement fixed-rate loan amortisation
 - [ ] Add CPR, CDR, recovery rate, and recovery lag assumptions
 - [ ] Aggregate loan-level collateral cash flows
 - [ ] Implement sequential-pay tranche waterfall
@@ -227,4 +263,3 @@ This project is for educational and research purposes only. It does not constitu
 ## Contributing
 
 The project is at an early stage. Suggestions on modelling conventions, waterfall design, testing, and documentation are welcome through GitHub issues and pull requests once the first working version is available.
-
